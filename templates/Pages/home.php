@@ -71,13 +71,17 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
 </head>
 <body>
     <header>
+
         <div class="container text-center">
             <a href="https://cakephp.org/" target="_blank" rel="noopener">
                 <!--<img alt="MElogo" src="../../resources/img/MElogo-3.png" width="350" />-->
                 <img alt="MElogo" src="https://myemployees.com/wp-content/uploads/2019/03/MElogo-3.png" width="350" />
             </a>
-            <h1>Vivement Cake chocolat, mais pas la vanilla.</h1>
+
+            <h1>Vivement la version chocolat, mais pas la vanilla.</h1>
         </div>
+    </header>
+    <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="container-fluid">
 
@@ -87,16 +91,16 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                         <li class="nav-item">
-                            <a class="nav-link" href="<?= $this->Url->build('/') ?>">Home</a>
+                            <a class="nav-link active" aria-current="page" href="<?= $this->Url->build('/') ?>">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page"  href="<?= $this->Url->build('/employees') ?>">Employees</a>
+                            <a class="nav-link " href="<?= $this->Url->build('/employees') ?>">Employees</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="<?= $this->Url->build('/departments') ?>">Departments</a>
                         </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false"></a>
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">Language</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
                                 <li><a class="dropdown-item" href="#">Fr</a></li>
                                 <li><a class="dropdown-item" href="#">En</a></li>
@@ -110,8 +114,12 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                 </div>
             </div>
         </nav>
-    </header>
+    </div>
+
     <main class="main">
+        <div class="banner">
+
+        </div>
         <div class="container">
             <div class="content">
                 <div class="row">

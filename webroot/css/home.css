@@ -16,8 +16,20 @@ body {
 header {
     margin-bottom: 60px;
 }
+header h1{
+    color: #D33C43;
+}
+.banner {
+    min-height: 60rem;
+    background: linear-gradient(0deg, rgba(104, 104, 117, 0.59), rgba(72, 72, 102, 0.74)), url(https://www.wholelifechallenge.com/wp-content/uploads/2018/04/happy-coworkers.jpg) no-repeat;
+    background-size: cover;
+    background-position-x: 50%;
+    background-position-y: 50%;
+    margin-bottom: 5rem;
+    width: 100%;
+}
 img {
-    margin-bottom: 30px;
+    margin-bottom: 10rem;
 }
 h1 {
     font-weight: bold;

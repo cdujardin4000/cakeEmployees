@@ -40,6 +40,7 @@ class EmployeesTable extends Table
         $this->setTable('employees');
         $this->setDisplayField('emp_no');
         $this->setPrimaryKey('emp_no');
+        //$this->hasMany('salaries');
     }
 
     /**
