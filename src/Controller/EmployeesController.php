@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+
+use Cake\I18n\FrozenDate;
 /**
  * Employees Controller
  *
@@ -20,7 +22,9 @@ class EmployeesController extends AppController
     {
         $employees = $this->paginate($this->Employees);
 
-        $this->set(compact('employees'));
+        $total = $this->Employees->find()->count();
+
+        $this->set(compact('employees','total'));
     }
 
     /**
@@ -33,7 +37,8 @@ class EmployeesController extends AppController
     public function view($id = null)
     {
         $employee = $this->Employees->get($id, [
-            'contain' => ['salaries'],
+            'contain' => ['Salaries'],
+
         ]);
 
         $this->set(compact('employee'));
@@ -44,14 +49,17 @@ class EmployeesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add()
-    {
-        $employee = $this->Employees->newEmptyEntity();
-        if ($this->request->is('post')) {
-            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
-            if ($this->Employees->save($employee)) {
-                $this->Flash->success(__('The employee has been saved.'));
+    public function add() {
 
+        $employee = $this->Employees->newEmptyEntity();
+
+        if ($this->request->is('post')) {
+
+            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+
+            if ($this->Employees->save($employee)) {
+
+                $this->Flash->success(__('The employee has been saved.'));
                 return $this->redirect(['action' => 'index']);
             }
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
@@ -71,15 +79,22 @@ class EmployeesController extends AppController
         $employee = $this->Employees->get($id, [
             'contain' => [],
         ]);
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
-            if ($this->Employees->save($employee)) {
-                $this->Flash->success(__('The employee has been saved.'));
 
+        if ($this->request->is(['patch', 'post', 'put'])) {
+
+            $employee = $this->Employees->patchEntity($employee, $this->request->getData());
+
+            if ($this->Employees->save($employee)) {
+
+                $this->Flash->success(__('The employee has been saved.'));
                 return $this->redirect(['action' => 'index']);
+
             }
+
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
+
         }
+
         $this->set(compact('employee'));
     }
 

@@ -1,1 +1,1 @@
-//todo detect click sur navbar a pour sellectionner le lien actif
+//todo modifier la navbar pour rendre le click de nouveau detectable :)
