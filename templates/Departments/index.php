@@ -5,8 +5,16 @@
  */
 ?>
 <div class="departments index content">
-    <?= $this->Html->link(__('New Department'), ['action' => 'add'], ['class' => 'button float-right']) ?>
+    <?= $this->Html->link(__('New Department'), ['action' => 'add',  $this->Paginator->counter('{{count}}') /*'Total' => 'total'*/],
+        [
+            'class' => 'button float-right',
+
+            //'total' => $this->Number->format($total,['locale' => 'fr_BE'])
+        ])
+    ?>
     <h3><?= __('Departments') ?></h3>
+    <div><?= __('Total') ?> : <?= $this->Number->format($total,['locale' => 'fr_BE']) ?> départements</div>
+    <div><?= __('Total') ?> : <?= $this->Paginator->counter('{{count}}') ?> départements</div>
     <div class="table-responsive">
         <table>
             <thead>
@@ -24,16 +32,19 @@
                     <td class="actions">
                         <?= $this->Html->link(__('<i class="fas fa-eye"></i>'),
                             ['action' => 'view', $department->dept_no],
-                            ['escape' => false]) ?>
+                            ['escape' => false])
+                        ?>
                         <?= $this->Html->link(__('<i class="fas fa-edit"></i>'),
                             ['action' => 'edit', $department->dept_no],
-                            ['escape' => false]) ?>
+                            ['escape' => false])
+                        ?>
                         <?= $this->Form->postLink(__('<i class="fas fa-trash-alt"></i>'),
                             ['action' => 'delete', $department->dept_no],
                             [
                                 'confirm' => __('Are you sure you want to delete # {0}?', $department->dept_no),
                                 'escape' => false
-                            ]) ?>
+                            ])
+                        ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

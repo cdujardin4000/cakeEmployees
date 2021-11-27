@@ -3,6 +3,7 @@ declare(strict_types=1);
 
 namespace App\Model\Table;
 
+use Cake\Datasource\EntityInterface;
 use Cake\ORM\Query;
 use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
@@ -40,7 +41,20 @@ class DepartmentsTable extends Table
         $this->setTable('departments');
         $this->setDisplayField('dept_no');
         $this->setPrimaryKey('dept_no');
-        
+
+    }
+
+    public function findLastDep(Query $query, array $options) {
+
+        $query->select(['lastDep' => $query->func()->filter('dept_no')]);
+
+        return $query;
+    }
+
+    public function beforeSave(Event $event, EntityInterface $entity, $options) {
+
+        //$depId = ++$total
+        //$entity->dept_no = 'd0'.$depId;
     }
 
     /**
