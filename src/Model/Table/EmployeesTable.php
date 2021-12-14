@@ -43,30 +43,46 @@ class EmployeesTable extends Table
         $this->setDisplayField('emp_no');
         $this->setPrimaryKey('emp_no');
 
-
         //associations
-        $this->hasMany('Salaries',
-            [
+        $this->hasMany('Salaries', [
                 'foreignKey' => 'emp_no',
-            ]
-        );
-
-
+            ]);
     }
 
-    public function findLastId(Query $query, array $options) {
-        $query->select(['lastId' => $query->func()->max('emp_no')]);
+    /**
+     * findEmployees method
+     *
+     * @param \Cake\ORM\query $query The query to find active employees of a department,
+     * @param array $options Options
+     * @return \Cake\ORM\query $query
+     */
+    public function findEmployees(Query $query, array $options)
+    {
+        $query->innerJoinWith(
+            'Departments',
+            function ($q) {
+                return $q->where(
+                    ['DeptEmp.to_date' => '9999-01-01']
+                );
+            }
+        );
 
         return $query;
     }
 
-    public function beforeSave(Event $event, EntityInterface $entity, $options) {
+    /**
+     * beforeSave method
+     *
+     * @param \Cake\Event\Event $event The event to be executed,
+     * @param \Cake\Datasource\EntityInterface $entity the entity to be saved
+     * @param array $options the options
+     * @return void
+     */
+    public function beforeSave(Event $event, EntityInterface $entity, $options)
+    {
         $lastId = $this->find('lastId')->first()->lastId;
-
         $entity->emp_no = ++$lastId;
     }
-
-
 
     /**
      * Default validation rules.
