@@ -3,6 +3,8 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use Cake\Event\Event;
+
 /**
  * Departments Controller
  *
@@ -11,6 +13,41 @@ namespace App\Controller;
  */
 class DepartmentsController extends AppController
 {
+    public $paginate = [
+        'limit' => 1,
+        'Employees' => [
+            'limit' => 5,
+        ],
+        'contain' => ['Employees'],
+    ];
+
+    /**
+     * Initialize method
+     * Charge tous les composants nécessaires
+     *
+     * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
+     * @return \Cake\Http\Response|null|void Renders view
+     */
+    public function initialize(): void
+    {
+        parent::initialize();
+        $this->loadComponent('Paginator');
+        ini_set('memory_limit', '-1');
+    }
+
+    /**
+     * BeforeFilter method
+     *
+     * @param \Cake\Event\EventInterface $event event interface
+     * @return \Cake\Http\Response|void Renders view
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated(['index', 'view']);
+    }
+
     /**
      * Index method
      *
@@ -32,11 +69,12 @@ class DepartmentsController extends AppController
      */
     public function view($id = null)
     {
-        $department = $this->Departments->get($id, [
-            'contain' => [],
-        ]);
-
-        $this->set(compact('department'));
+        $query = $this->Departments->find(
+            'ActiveEmployees'
+        )->where(['dept_no' => $id]);
+        $department = $query->first();
+        $nbEmployees = 14000; //TODO
+        $this->set(compact('department', 'nbEmployees'));
     }
 
     /**
@@ -48,13 +86,20 @@ class DepartmentsController extends AppController
     {
         $department = $this->Departments->newEmptyEntity();
         if ($this->request->is('post')) {
-            $department = $this->Departments->patchEntity($department, $this->request->getData());
+            $department = $this->Departments->patchEntity(
+                $department,
+                $this->request->getData()
+            );
             if ($this->Departments->save($department)) {
-                $this->Flash->success(__('The department has been saved.'));
+                $this->Flash->success(
+                    __('The department has been saved.')
+                );
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The department could not be saved. Please, try again.'));
+            $this->Flash->error(
+                __('The department could not be saved. Please, try again.')
+            );
         }
         $this->set(compact('department'));
     }
@@ -72,13 +117,20 @@ class DepartmentsController extends AppController
             'contain' => [],
         ]);
         if ($this->request->is(['patch', 'post', 'put'])) {
-            $department = $this->Departments->patchEntity($department, $this->request->getData());
+            $department = $this->Departments->patchEntity(
+                $department,
+                $this->request->getData()
+            );
             if ($this->Departments->save($department)) {
-                $this->Flash->success(__('The department has been saved.'));
+                $this->Flash->success(
+                    __('The department has been saved.')
+                );
 
                 return $this->redirect(['action' => 'index']);
             }
-            $this->Flash->error(__('The department could not be saved. Please, try again.'));
+            $this->Flash->error(
+                __('The department could not be saved. Please, try again.')
+            );
         }
         $this->set(compact('department'));
     }
@@ -92,12 +144,21 @@ class DepartmentsController extends AppController
      */
     public function delete($id = null)
     {
-        $this->request->allowMethod(['post', 'delete']);
+        $this->request->allowMethod(
+            [
+                'post',
+                'delete',
+            ]
+        );
         $department = $this->Departments->get($id);
         if ($this->Departments->delete($department)) {
-            $this->Flash->success(__('The department has been deleted.'));
+            $this->Flash->success(
+                __('The department has been deleted.')
+            );
         } else {
-            $this->Flash->error(__('The department could not be deleted. Please, try again.'));
+            $this->Flash->error(
+                __('The department could not be deleted. Please, try again.')
+            );
         }
 
         return $this->redirect(['action' => 'index']);

@@ -3,8 +3,9 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-
+use Cake\View\CellTrait;
 use Cake\I18n\FrozenDate;
+
 /**
  * Employees Controller
  *
@@ -13,6 +14,23 @@ use Cake\I18n\FrozenDate;
  */
 class EmployeesController extends AppController
 {
+    use CellTrait;
+
+    /**
+     * BeforeFilter method
+     *
+     * that allow Unauthenticated connexion
+     *
+     * @param \Cake\Event\EventInterface $event the unauthenticated event
+     * @return void
+     */
+    public function beforeFilter(\Cake\Event\EventInterface $event)
+    {
+        parent::beforeFilter($event);
+
+        $this->Authentication->allowUnauthenticated(['login','index','view']);
+    }
+
     /**
      * Index method
      *
@@ -24,7 +42,9 @@ class EmployeesController extends AppController
 
         $total = $this->Employees->find()->count();
 
-        $this->set(compact('employees','total'));
+        $genderCell = $this->cell('Gender');
+
+        $this->set(compact('employees', 'total'));
     }
 
     /**
@@ -36,10 +56,10 @@ class EmployeesController extends AppController
      */
     public function view($id = null)
     {
-        $employee = $this->Employees->get($id, [
-            'contain' => ['Salaries'],
-
-        ]);
+        $employee = $this->Employees->get(
+            $id,
+            ['contain' => ['Salaries']]
+        );
 
         $this->set(compact('employee'));
     }
@@ -49,21 +69,22 @@ class EmployeesController extends AppController
      *
      * @return \Cake\Http\Response|null|void Redirects on successful add, renders view otherwise.
      */
-    public function add() {
-
+    public function add()
+    {
         $employee = $this->Employees->newEmptyEntity();
 
         if ($this->request->is('post')) {
-
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
 
             if ($this->Employees->save($employee)) {
-
                 $this->Flash->success(__('The employee has been saved.'));
+
                 return $this->redirect(['action' => 'index']);
             }
+
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
         }
+
         $this->set(compact('employee'));
     }
 
@@ -76,23 +97,21 @@ class EmployeesController extends AppController
      */
     public function edit($id = null)
     {
-        $employee = $this->Employees->get($id, [
-            'contain' => [],
-        ]);
+        $employee = $this->Employees->get(
+            $id,
+            ['contain' => []]
+        );
 
         if ($this->request->is(['patch', 'post', 'put'])) {
-
             $employee = $this->Employees->patchEntity($employee, $this->request->getData());
 
             if ($this->Employees->save($employee)) {
-
                 $this->Flash->success(__('The employee has been saved.'));
-                return $this->redirect(['action' => 'index']);
 
+                return $this->redirect(['action' => 'index']);
             }
 
             $this->Flash->error(__('The employee could not be saved. Please, try again.'));
-
         }
 
         $this->set(compact('employee'));
@@ -109,6 +128,7 @@ class EmployeesController extends AppController
     {
         $this->request->allowMethod(['post', 'delete']);
         $employee = $this->Employees->get($id);
+
         if ($this->Employees->delete($employee)) {
             $this->Flash->success(__('The employee has been deleted.'));
         } else {
@@ -116,5 +136,38 @@ class EmployeesController extends AppController
         }
 
         return $this->redirect(['action' => 'index']);
+    }
+
+    /**
+     * Login method
+     *
+     * @return \Cake\Http\Response|null|void Redirects to page home.
+     */
+    public function login()
+    {
+        $result = $this->Authentication->getResult();
+
+        // Si l'utilisateur est connecté, le renvoyer ailleurs
+        if ($result->isValid()) {
+            $target = $this->Authentication->getLoginRedirect() ?? '/pages/home';
+
+            return $this->redirect($target);
+        }
+
+        if ($this->request->is('post') && !$result->isValid()) {
+            $this->Flash->error('Identifiant ou mot de passe invalide');
+        }
+    }
+
+    /**
+     * Logout method
+     *
+     * @return \Cake\Http\Response|null|void Redirects to login page if successful
+     */
+    public function logout()
+    {
+        $this->Authentication->logout();
+
+        return $this->redirect(['controller' => 'Employees', 'action' => 'login']);
     }
 }

@@ -40,6 +40,7 @@ class DepartmentsTable extends Table
         $this->setTable('departments');
         $this->setDisplayField('dept_no');
         $this->setPrimaryKey('dept_no');
+
         //ASSOCIATIONS
         $this->belongsToMany(
             'Employees',
@@ -49,6 +50,24 @@ class DepartmentsTable extends Table
                 'targetForeignKey' => 'emp_no',
             ]
         );
+    }
+
+    /**
+     * FindActiveEmployees method
+     *
+     * @param \Cake\ORM\Query $query The query to find active employees (from datenow to unlimited). Limit the number of active employees to 10 order by 'hire_date' DESC.
+     * @param array $options array of options
+     * @return \Cake\ORM\Query $query
+     */
+    public function findActiveEmployees(Query $query, array $options)
+    {
+        $query->contain('Employees', function ($q) {
+            return $q->where(['DeptEmp.to_date' => '9999-01-01',])
+                ->order(['hire_date' => 'DESC',])
+                ->limit(10);
+        });
+
+        return $query;
     }
 
     /**

@@ -44,30 +44,19 @@ class EmployeesTable extends Table
         $this->setPrimaryKey('emp_no');
 
         //associations
-        $this->hasMany('Salaries', [
-                'foreignKey' => 'emp_no',
-            ]);
-    }
-
-    /**
-     * findEmployees method
-     *
-     * @param \Cake\ORM\query $query The query to find active employees of a department,
-     * @param array $options Options
-     * @return \Cake\ORM\query $query
-     */
-    public function findEmployees(Query $query, array $options)
-    {
-        $query->innerJoinWith(
-            'Departments',
-            function ($q) {
-                return $q->where(
-                    ['DeptEmp.to_date' => '9999-01-01']
-                );
-            }
+        $this->hasMany(
+            'Salaries',
+            ['foreignKey' => 'emp_no',]
         );
-
-        return $query;
+        $this->belongsToMany(
+            'Departments',
+            [
+                'joinTable' => 'dept_emp',
+                'foreignKey' => 'emp_no',
+                'targetForeignKey' => 'dept_no',
+                'finder' => ['activeEmployees'],
+            ]
+        );
     }
 
     /**

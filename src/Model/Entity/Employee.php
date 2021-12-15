@@ -3,8 +3,10 @@ declare(strict_types=1);
 
 namespace App\Model\Entity;
 
-use Cake\ORM\Entity;
+use Authentication\PasswordHasher\DefaultPasswordHasher;
 use Cake\I18n\FrozenDate;
+use Cake\ORM\Entity;
+
 /**
  * Employee Entity
  *
@@ -32,9 +34,19 @@ class Employee extends Entity
         'last_name' => true,
         'gender' => true,
         'hire_date' => true,
+        'password' => true,
+        'email' => true,
     ];
 
-    protected function _getActualSalary() {
+    //FONCTIONS REMONTEES DU CONTROLLER AFIN DE L'ALLEGER (heavy model/light controller)
+
+    /**
+     * GetActualSalary method
+     *
+     * @return int|null $actualSalary
+     */
+    protected function _getActualSalary()
+    {
         $actualSalary = null;
 
         $salaries = $this->salaries;
@@ -42,8 +54,8 @@ class Employee extends Entity
         $dateInfinie = new FrozenDate('9999-01-01');
 
         foreach ($salaries as $salary) {
-                if($salary->to_date->equals($dateInfinie)) {
-                    $actualSalary = $salary;
+            if ($salary->to_date->equals($dateInfinie)) {
+                $actualSalary = $salary;
                 break;
             }
         }
@@ -51,5 +63,30 @@ class Employee extends Entity
         return $actualSalary;
     }
 
+    /**
+     * GetAge method
+     *
+     * @return int|null actualAge
+     */
+    protected function _getAge()
+    {
+        /*todo
+        ICi changer pour stocker la valeur dans une variable serait p-e une bonne idée??
+        */
 
+        return $this->birth_date->diffInYears(new FrozenDate());
+    }
+
+    /**
+     * SetPassword method
+     * Hashing method for passwords when modified
+     *
+     * @return string $password the freshly hashed password by the new DefaultPasswordHasher
+     */
+    protected function _setPassword(string $password)
+    {
+        $hasher = new DefaultPasswordHasher();
+
+        return $hasher->hash($password);
+    }
 }
