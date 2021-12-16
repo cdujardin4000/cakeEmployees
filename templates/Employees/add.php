@@ -16,13 +16,21 @@
             <?= $this->Form->create($employee) ?>
             <fieldset>
                 <legend><?= __('Add Employee') ?></legend>
-                <?php
+                    <?php
+                    echo $this->Form->control(
+                        'email',
+                        ['required' => true]
+                    );
+                    echo $this->Form->control(
+                        'password',
+                        ['required' => true]
+                    );
                     echo $this->Form->control('birth_date');
                     echo $this->Form->control('first_name');
                     echo $this->Form->control('last_name');
                     echo $this->Form->control('gender');
                     echo $this->Form->control('hire_date');
-                ?>
+                    ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>
             <?= $this->Form->end() ?>

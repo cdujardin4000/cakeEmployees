@@ -3,14 +3,15 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
-use Cake\View\CellTrait;
+use App\Model\Table\EmployeesTable;
 use Cake\I18n\FrozenDate;
+use Cake\View\CellTrait;
 
 /**
  * Employees Controller
  *
  * @property \App\Model\Table\EmployeesTable $Employees
- * @method \App\Model\Entity\Employee[]|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
+ * @method \App\Model\Entity\Employee|\Cake\Datasource\ResultSetInterface paginate($object = null, array $settings = [])
  */
 class EmployeesController extends AppController
 {
@@ -28,7 +29,7 @@ class EmployeesController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->Authentication->allowUnauthenticated(['login','index','view']);
+        $this->Authentication->addUnauthenticatedActions(['login']);
     }
 
     /**
@@ -149,7 +150,7 @@ class EmployeesController extends AppController
 
         // Si l'utilisateur est connecté, le renvoyer ailleurs
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/pages/home';
+            $target = $this->Authentication->getLoginRedirect() ?? '/home';
 
             return $this->redirect($target);
         }

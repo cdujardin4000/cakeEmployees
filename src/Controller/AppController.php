@@ -37,12 +37,13 @@ class AppController extends Controller
      *
      * @return void
      */
-
-
     public function initialize(): void
     {
         parent::initialize();
-
+        // in a controller beforeFilter or initialize
+        // Make view and index not require a logged in user.
+        $this->Authentication->allowUnauthenticated(['view', 'index']);
+        $this->loadComponent('Authentication.Authentication');
         $this->loadComponent('RequestHandler');
         $this->loadComponent('Flash');
 

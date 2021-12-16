@@ -159,23 +159,25 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
 
         // Définissez vers où les utilisateurs doivent être redirigés s'ils ne
         // sont pas authentifiés
-        $service->setConfig([
-            'unauthenticatedRedirect' => Router::url([
-                'prefix' => false,
-                'plugin' => null,
-                'controller' => 'Employees',
-                'action' => 'login',
-            ]),
-            'queryParam' => 'redirect',
-        ]);
+        $service->setConfig(
+            [
+                'unauthenticatedRedirect' => Router::url([
+                    'prefix' => false,
+                    'plugin' => null,
+                    'controller' => 'Employees',
+                    'action' => 'login',
+                ]),
+                'queryParam' => 'redirect',
+            ]
+        );
         // Champs requis à l'identification
         $fields = [
             IdentifierInterface::CREDENTIAL_USERNAME => 'email',
             IdentifierInterface::CREDENTIAL_PASSWORD => 'password',
         ];
-        // Chargez les Authenticator de Session
+        // Chargez les Authenticator de Session en premier
         $service->loadAuthenticator('Authentication.Session');
-        // Chargez les Authenticator de Formulaires
+        // Chargez les Authenticator
         $service->loadAuthenticator(
             'Authentication.Form',
             [
@@ -194,6 +196,8 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
         // Chargez les Authenticator de password (fields et resolver)
         $service->loadIdentifier(
             'Authentication.Password',
+            compact('fields')
+            /*
             [
                 'fields' => [
                     'username' => 'email',
@@ -203,7 +207,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                     'className' => 'Authentication.Orm',
                     'userModel' => 'Employees',
                 ],
-            ]
+            ]*/
         );
 
         return $service;
