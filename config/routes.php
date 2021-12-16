@@ -44,18 +44,23 @@ return static function (RouteBuilder $routes) {
      */
     $routes->setRouteClass(DashedRoute::class);
 
+    $routes->prefix('Admin', function (RouteBuilder $routes) {
+        $routes->connect('/', ['prefix' => 'admin', 'controller' => 'Pages', 'action' => 'index']);
+        $routes->fallbacks(DashedRoute::class);
+    });
+
     $routes->scope('/', function (RouteBuilder $builder) {
         /*
-         * Here, we are connecting '/' (base path) to a controller called 'Pages',
+         * Here, we are connecting '/' (base path) to a controller called 'Admin',
          * its action called 'display', and we pass a param to select the view file
-         * to use (in this case, templates/Pages/home.php)...
+         * to use (in this case, templates/Admin/home.php)...
          */
         $builder->connect('/', ['controller' => 'Pages', 'action' => 'display', 'home']);
 
         /*
-         * ...and connect the rest of 'Pages' controller's URLs.
+         * ...and connect the rest of 'Admin' controller's URLs.
          */
-        $builder->connect('/pages/*', 'Pages::display');
+        $builder->connect('/pages/*', 'Admin::display');
 
         /*
          * Connect catchall routes for all controllers.

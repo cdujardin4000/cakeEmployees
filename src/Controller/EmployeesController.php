@@ -2,8 +2,6 @@
 declare(strict_types=1);
 
 namespace App\Controller;
-
-
 use Cake\I18n\FrozenDate;
 /**
  * Employees Controller
