@@ -27,7 +27,8 @@
                         'Are you sure you want to delete # {0}?',
                         $department->dept_no
                     ),
-                    'class' => 'side-nav-item']
+                    'class' => 'side-nav-item',
+                ]
             ) ?>
             <?= $this->Html->link(
                 __('List Departments'),
@@ -41,16 +42,17 @@
             ) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    <div class="column-responsive column-center">
         <div class="departments view content">
             <h3><?= h($department->dept_no) ?></h3>
             <div class="card" style="width: 18rem;">
                 <?= $this->Html->image(
                     'department/' . $department->picture,
                     [
-                    'alt' => h($department->dept_name),
-                    'width' => 250,
-                    'class' => 'card-img-top',
+                        'alt' => h($department->dept_name),
+                        'width' => 1000,
+                        'text-align' => 'center',
+                        'class' => 'card-img-top',
                     ]
                 )
                 ?>
@@ -59,6 +61,24 @@
                 </div>
             </div>
             <table>
+                <?php
+                echo $this->Html->tableHeaders(
+                    [
+                        __('Dept No'),
+                        __('Dept Name'),
+                        __('Dept manager'),
+                        __('Amount Employees'),
+                    ]
+                );
+                echo $this->Html->tableCells(
+                    [
+                        h($department->dept_no),
+                        h($department->dept_name),
+                        'todo',
+                        h(($nbEmployees ?? '0')),
+                    ]
+                )
+                ?>
                 <tr>
                     <th><?= __('Dept No') ?></th>
                     <td><?= h($department->dept_no) ?></td>
@@ -69,7 +89,7 @@
                 </tr>
                 <tr>
                     <th><?= __('Employee\'s list') ?></th>
-                    <td><p><?= ($nbEmployees ?? '0') . __('employees') ?></p>
+                    <td><p><?= h(($nbEmployees ?? '0')) . __('employees') ?></p>
                         <?php
                         $liste = '';
                         foreach ($department->employees as $employee) :
@@ -77,7 +97,21 @@
                         endforeach;
                         $liste = substr($liste, 0, -1);
                         $liste .= '...';?>
-                        <p><?= $liste ?></p>
+                        <p><?= h($liste) ?></p>
+                    </td>
+                </tr>
+                <tr>
+                    <th><?= __('highest wages') ?></th>
+                    <td><p><?= __('10 biggest salary') ?></p>
+                        <?php
+                        $liste = '';
+                        foreach ($department->employees as $employee) :
+                            $liste .= "$employee->first_name $employee->last_name, ";
+                        endforeach;
+                        $liste = substr($liste, 0, -1);
+                        $liste .= '...';
+                        ?>
+                        <p><?= h($liste) ?></p>
                     </td>
                 </tr>
             </table>

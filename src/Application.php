@@ -193,11 +193,9 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
             ]
         );
 
-        // Chargez les Authenticator de password (fields et resolver)
+        // Chargez les Authenticator de password (fields et resolver -> redéfini les routes de employess vers users)
         $service->loadIdentifier(
             'Authentication.Password',
-            compact('fields')
-            /*
             [
                 'fields' => [
                     'username' => 'email',
@@ -207,7 +205,7 @@ class Application extends BaseApplication implements AuthenticationServiceProvid
                     'className' => 'Authentication.Orm',
                     'userModel' => 'Employees',
                 ],
-            ]*/
+            ]
         );
 
         return $service;

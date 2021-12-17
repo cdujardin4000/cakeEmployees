@@ -42,33 +42,38 @@
             ) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    <div class="column-responsive column">
         <div class="employees view content">
-            <h3><?= h($employee->emp_no) ?></h3>
-            <div id="extra-infos">
-                <div><?= __(
-                    'Salaire actuel'
-                ) ?> : <?=
-                $this->Number->format(
-                    $employee->actualSalary->salary,
-                    [
-                        'locale' => 'fr_BE',
-                        'after' => ' €',
-                        'places' => 2,
-                    ]
-                ) ?>
-
-                <?= $this->Number->currency(
-                    $employee->actualSalary->salary,
-                    'EUR',
-                    [
-                        'locale' => 'fr_BE',
-                        'places' => 2,
-                    ]
-                ) ?>
-                </div>
-                <div><?= __('Age') ?> : <?= $employee->age ?> ans</div>
+            <h3><?= h($employee->emp_no . ' : ' . $employee->first_name . ' ' . $employee->last_name)?></h3>
+            <div class="card" style="width: 30rem; text-align: center; display:flex; align-items:center">
+                <?php
+                $picture = $employee->emp_picture;
+                if ($picture == null) {
+                    $this->Form->create($employee, ['type' => 'file']) ?>
+                <fieldset>
+                    <legend><?= __('Add your picture') ?></legend>
+                    <?php echo $this->Form->control('picture', ['type' => 'file']); ?>
+                </fieldset>
+                    <?= $this->Form->button(__('Submit')) ?>
+                    <?= $this->Form->end() ?>
             </div>
+            <div class="card" style="width: 18rem; text-align: center">
+                <?php } else {
+                    h($this->Html->image(
+                        'employee/' . $employee->emp_picture,
+                        [
+                            'alt' => h($employee->emp_no),
+                            'width' => 150,
+                            'height' => 150,
+                            'class' => 'card-img-top',
+                        ]
+                    ));
+                } ?>
+                <div class="card-body">
+                    <h5 class="card-title"><?= h($employee->first_name . ' ' . $employee->last_name) ?> </h5>
+                </div>
+            </div>
+            <h3><?= __('Personal informations') ?></h3>
             <table>
                 <tr>
                     <th><?= __('First Name') ?></th>
@@ -84,42 +89,63 @@
                 </tr>
                 <tr>
                     <th><?= __('Emp No') ?></th>
-                    <td><?= $this->Number->format($employee->emp_no) ?></td>
+                    <td><?= h($this->Number->format($employee->emp_no)) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Birth Date') ?></th>
-                    <td><?= h($employee->birth_date) ?></td>
+                    <td><?= h($employee->birth_date->i18nFormat('yyyy-MM-dd')) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Hire Date') ?></th>
-                    <td><?= h($employee->hire_date) ?></td>
+                    <td><?= h($employee->hire_date->i18nFormat('yyyy-MM-dd')) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Salaries') ?></th>
+                    <th><?= __('Salaire actuel') ?></th>
                     <td>
-                        <ul>
-                            <?php foreach ($employee->salaries as $salary) { ?>
-                                <li>
-                                    <?= "$salary->salary (
-                                    {
-                                        $this->Time->format(
-                                            $salary->from_date,
-                                            'd MMMM Y'
-                                            )
-                                    }
-                                    -
-                                    {
-                                        $this->Time->format(
-                                            $salary->to_date,
-                                            'd MMMM Y'
-                                            )
-                                    }
-                                    )" ?>
-                                </li>
-                            <?php } ?>
-                        </ul>
+                        <?= h($this->Number->currency(
+                            $employee->actualSalary->salary,
+                            'EUR',
+                            [
+                                'locale' => 'fr_BE',
+                                'places' => 2,
+                            ]
+                        ))
+                        ?>
                     </td>
                 </tr>
+                <tr>
+                    <th><?= __('Age') ?></th>
+                    <td><?= h($employee->age) ?></td>
+                </tr>
+
+            </table>
+            <h3><?= __('Salaries') ?></h3>
+            <table>
+                <?php
+                echo $this->Html->tableHeaders(
+                    [
+                        __('Salary'),
+                        __('From'),
+                        __('to'),
+                    ]
+                );
+                foreach ($employee->salaries as $salary) :
+                    echo $this->Html->tableCells(
+                        [
+                            h($this->Number->currency(
+                                $salary->salary,
+                                'EUR',
+                                [
+                                    'locale' => 'fr_BE',
+                                    'places' => 2,
+                                ]
+                            )),
+                            h($salary->from_date->i18nFormat('yyyy-MM-dd')),
+                            h($salary->to_date->i18nFormat('yyyy-MM-dd')),
+                        ]
+                    );
+                endforeach;
+                ?>
             </table>
         </div>
     </div>

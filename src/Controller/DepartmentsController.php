@@ -45,7 +45,7 @@ class DepartmentsController extends AppController
     {
         parent::beforeFilter($event);
 
-        $this->Authentication->allowUnauthenticated(['index', 'view']);
+        //$this->Authentication->allowUnauthenticated(['index', 'view']);
     }
 
     /**
