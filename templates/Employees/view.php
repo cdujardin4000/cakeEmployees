@@ -7,7 +7,7 @@
 <div class="row">
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
+            <h2 class="heading"><?= __('Actions') ?></h2>
             <?= $this->Html->link(
                 __('Edit Employee'),
                 [
@@ -44,7 +44,7 @@
     </aside>
     <div class="column-responsive column">
         <div class="employees view content">
-            <h3><?= h($employee->emp_no . ' : ' . $employee->first_name . ' ' . $employee->last_name)?></h3>
+            <h2 class="heading"><?= h($employee->emp_no . ' : ' . $employee->first_name . ' ' . $employee->last_name)?></h2>
             <div class="card" style="width: 30rem; text-align: center; display:flex; align-items:center">
                 <?php
                 $picture = $employee->emp_picture;
@@ -69,11 +69,8 @@
                         ]
                     ));
                 } ?>
-                <div class="card-body">
-                    <h5 class="card-title"><?= h($employee->first_name . ' ' . $employee->last_name) ?> </h5>
-                </div>
             </div>
-            <h3><?= __('Personal informations') ?></h3>
+            <h2 class="heading"><?= __('Personal informations') ?></h2>
             <table>
                 <tr>
                     <th><?= __('First Name') ?></th>
@@ -117,9 +114,8 @@
                     <th><?= __('Age') ?></th>
                     <td><?= h($employee->age) ?></td>
                 </tr>
-
             </table>
-            <h3><?= __('Salaries') ?></h3>
+            <h2 class="heading"><?= __('Salaries') ?></h2>
             <table>
                 <?php
                 echo $this->Html->tableHeaders(

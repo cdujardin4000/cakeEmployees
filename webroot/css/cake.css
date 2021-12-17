@@ -119,6 +119,13 @@ th {
     display: block;
     padding: 0.5rem 0;
 }
+.heading {
+    margin-top: 3rem;
+    text-align: center;
+}
+.card{
+    margin: 1rem auto;
+}
 /* Footer */
 footer{
     text-align: center;
