@@ -114,10 +114,20 @@ th {
 .top-nav-links a {
     font-weight: bold;
 }
-
-.side-nav-item {
-    display: block;
+.side-nav {
+    margin: 2rem auto;
+    display: flex;
+    justify-content: space-evenly;
+}
+body .side-nav-item {
+    display: flex;
+    flex-direction: row;
     padding: 0.5rem 0;
+    font-size: 2.5rem;
+}
+body .side-nav-item:hover {
+    color: #d33c43;
+    border-color: #d33c43;
 }
 .heading {
     margin-top: 3rem;
@@ -129,7 +139,7 @@ th {
 /* Footer */
 footer{
     text-align: center;
-    padding:  2rem 0;
+    padding: 2rem 0;
 }
 
 footer p strong{

@@ -5,9 +5,35 @@
  */
 ?>
 <div class="row">
+    <h1 class="heading"><?= h($employee->emp_no . ' : ' . $employee->first_name . ' ' . $employee->last_name)?></h1>
+    <?php $picture = $employee->emp_picture;
+    if ($picture == null) { ?>
+    <div class="card" style="width: 30rem; text-align: center; display:flex; align-items:center">
+        <?php $this->Form->create($employee, ['type' => 'file']) ?>
+        <fieldset>
+            <legend><?= __('Add your picture') ?></legend>
+            <?php echo $this->Form->control('picture', ['type' => 'file']); ?>
+        </fieldset>
+            <?= $this->Form->button(__('Submit')) ?>
+            <?= $this->Form->end() ?>
+    </div>
+    <?php } else { ?>
+    <div class="card" style="width: 18rem; text-align: center">
+        <?php h($this->Html->image(
+            'employee/' . $employee->emp_picture,
+            [
+                'alt' => h($employee->emp_no),
+                'width' => 150,
+                'height' => 150,
+                'class' => 'card-img-top',
+            ]
+        ));
+    }
+    ?>
+    </div>
     <aside class="column">
+        <h2 class="heading"><?= __('Actions') ?></h2>
         <div class="side-nav">
-            <h2 class="heading"><?= __('Actions') ?></h2>
             <?= $this->Html->link(
                 __('Edit Employee'),
                 [
@@ -44,32 +70,6 @@
     </aside>
     <div class="column-responsive column">
         <div class="employees view content">
-            <h2 class="heading"><?= h($employee->emp_no . ' : ' . $employee->first_name . ' ' . $employee->last_name)?></h2>
-            <div class="card" style="width: 30rem; text-align: center; display:flex; align-items:center">
-                <?php
-                $picture = $employee->emp_picture;
-                if ($picture == null) {
-                    $this->Form->create($employee, ['type' => 'file']) ?>
-                <fieldset>
-                    <legend><?= __('Add your picture') ?></legend>
-                    <?php echo $this->Form->control('picture', ['type' => 'file']); ?>
-                </fieldset>
-                    <?= $this->Form->button(__('Submit')) ?>
-                    <?= $this->Form->end() ?>
-            </div>
-            <div class="card" style="width: 18rem; text-align: center">
-                <?php } else {
-                    h($this->Html->image(
-                        'employee/' . $employee->emp_picture,
-                        [
-                            'alt' => h($employee->emp_no),
-                            'width' => 150,
-                            'height' => 150,
-                            'class' => 'card-img-top',
-                        ]
-                    ));
-                } ?>
-            </div>
             <h2 class="heading"><?= __('Personal informations') ?></h2>
             <table>
                 <tr>
