@@ -11,13 +11,8 @@
         ['class' => 'button float-right']
     ) ?>
     <h3><?= __('Employees') ?></h3>
-    <div><?= __('Total') ?> : <?= $this->Number->format(
-        $total,
-        ['locale' => 'fr_BE']
-    ) ?> employés</div>
-    <div><?= __('Total') ?> : <?= $this->Paginator->counter(
-        '{{count}}'
-    ) ?> employés</div>
+
+    <div><?= __('Total') ?> : <?= h($this->Paginator->counter('{{count}}')) ?> employés</div>
     <div class="table-responsive">
         <table>
             <thead>

@@ -13,13 +13,6 @@ use Cake\Event\Event;
  */
 class DepartmentsController extends AppController
 {
-    public $paginate = [
-        'limit' => 1,
-        'Employees' => [
-            'limit' => 5,
-        ],
-        'contain' => ['Employees'],
-    ];
 
     /**
      * Initialize method
@@ -73,8 +66,7 @@ class DepartmentsController extends AppController
             'ActiveEmployees'
         )->where(['dept_no' => $id]);
         $department = $query->first();
-        $nbEmployees = 14000; //TODO
-        $this->set(compact('department', 'nbEmployees'));
+        $this->set(compact('department', $department));
     }
 
     /**
