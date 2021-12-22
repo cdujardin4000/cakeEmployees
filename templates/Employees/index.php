@@ -4,14 +4,13 @@
  * @var \App\Model\Entity\Employee[]|\Cake\Collection\CollectionInterface $employees
  */
 ?>
+<h1><?= __('Employees') ?></h1>
 <div class="employees index content">
     <?= $this->Html->link(
         __('New Employee'),
         ['action' => 'add'],
         ['class' => 'button float-right']
     ) ?>
-    <h3><?= __('Employees') ?></h3>
-
     <div><?= __('Total') ?> : <?= h($this->Paginator->counter('{{count}}')) ?> employés</div>
     <div class="table-responsive">
         <table>

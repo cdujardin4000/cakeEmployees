@@ -13,6 +13,8 @@ use Cake\ORM\Entity;
  */
 class Department extends Entity
 {
+    use \Cake\ORM\Locator\LocatorAwareTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *
@@ -24,9 +26,24 @@ class Department extends Entity
      */
     protected $_accessible = [
         'dept_name' => true,
+        'dept_picture' => true,
     ];
-    public function _getNbEmployees() {
-        return 10;
-        ////count($this->employees);
+
+    public function _getNbEmployees()
+    {
+        $query = $this->getTableLocator()->get('DeptEmp')->find()
+            ->where(['dept_no' => $this->dept_no])
+            ->where(['to_date' => '9999-01-01']);
+
+        return $query->count();
     }
+
+    /*public function getDeptManager()
+    {
+        $query = $this->getTableLocator()->get('DeptManager')->find()
+            ->where(['dept_no' => $this->dept_no])
+            ->where(['to_date' => '9999-01-01']);
+
+        return $query->count();
+    }*/
 }

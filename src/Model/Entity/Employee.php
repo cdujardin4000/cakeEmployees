@@ -36,6 +36,8 @@ class Employee extends Entity
         'hire_date' => true,
         'password' => true,
         'email' => true,
+        'emp_picture' => true,
+        'pic_dir' => true,
     ];
 
     //FONCTIONS REMONTEES DU CONTROLLER AFIN DE L'ALLEGER (heavy model/light controller)
@@ -70,10 +72,6 @@ class Employee extends Entity
      */
     protected function _getAge()
     {
-        /*todo
-        ICi changer pour stocker la valeur dans une variable serait p-e une bonne idée??
-        */
-
         return $this->birth_date->diffInYears(new FrozenDate());
     }
 

@@ -4,9 +4,9 @@
  * @var \App\Model\Entity\Department[]|\Cake\Collection\CollectionInterface $departments
  */
 ?>
+<h1><?= __('Departments') ?></h1>
 <div class="departments index content">
     <?= $this->Html->link(__('New Department'), ['action' => 'add'], ['class' => 'button float-right']) ?>
-    <h3><?= __('Departments') ?></h3>
     <div class="table-responsive">
         <table>
             <thead>
@@ -22,7 +22,7 @@
                 <tr>
                     <td><?= h($department->dept_no) ?></td>
                     <td><?= h($department->dept_name) ?></td>
-                    <td><?= h($department->nbEmployees) ?></td>
+                    <td><?= h('nbEmployees') ?></td>
                     <td class="actions">
                         <?=
                             $this->Html->link(

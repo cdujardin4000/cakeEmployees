@@ -5,9 +5,9 @@
  */
 ?>
 <div class="row">
+    <h1 class="heading"><?= __('Edit Employee') ?></h1>
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Form->postLink(
                 __('Delete'),
                 ['action' => 'delete', $employee->emp_no],
@@ -19,7 +19,7 @@
             <?= $this->Html->link(__('List Employees'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    <div class="column-responsive column">
         <div class="employees form content">
             <?= $this->Form->create($employee, ['type' => 'file']) ?>
             <fieldset>

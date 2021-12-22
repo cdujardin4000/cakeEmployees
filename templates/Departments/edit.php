@@ -5,9 +5,9 @@
  */
 ?>
 <div class="row">
+    <h1 class="heading"><?= __('Actions') ?></h1>
     <aside class="column">
         <div class="side-nav">
-            <h4 class="heading"><?= __('Actions') ?></h4>
             <?= $this->Form->postLink(
                 __('Delete'),
                 [
@@ -24,14 +24,14 @@
             <?= $this->Html->link(__('List Departments'), ['action' => 'index'], ['class' => 'side-nav-item']) ?>
         </div>
     </aside>
-    <div class="column-responsive column-80">
+    <div class="column-responsive column">
         <div class="departments form content">
             <?= $this->Form->create($department, ['type' => 'file']) ?>
             <fieldset>
                 <legend><?= __('Edit Department') ?></legend>
                 <?php
                     echo $this->Form->control('dept_name');
-                    echo $this->Form->control('picture', ['type' => 'file']);
+                    echo $this->Form->control('dept_picture', ['type' => 'file']);
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

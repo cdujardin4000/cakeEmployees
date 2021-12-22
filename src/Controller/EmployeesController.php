@@ -29,7 +29,7 @@ class EmployeesController extends AppController
     {
         parent::beforeFilter($event);
 
-        //$this->Authentication->addUnauthenticatedActions(['login']);
+        //$this->Authentication->addUnauthenticatedActions(['login','index','view']);
     }
 
     /**
@@ -45,7 +45,7 @@ class EmployeesController extends AppController
 
         $genderCell = $this->cell('Gender');
 
-        $this->set(compact('employees', 'total'));
+        $this->set(compact('employees', 'total', 'genderCell'));
     }
 
     /**
@@ -146,22 +146,11 @@ class EmployeesController extends AppController
      */
     public function login()
     {
-        $employee = $this->Employees->newEntity(
-            [
-                'password' => 'epfc',
-                'birth_date' => new FrozenDate(),
-                'hire_date' => new FrozenDate(),
-                'first_name' => 'epfc',
-                'last_name' => 'epfc',
-                'gender' => 'm',
-            ]
-        );
-        //dd($employee);
         $result = $this->Authentication->getResult();
 
         // Si l'utilisateur est connecté, le renvoyer ailleurs
         if ($result->isValid()) {
-            $target = $this->Authentication->getLoginRedirect() ?? '/home';
+            $target = $this->Authentication->getLoginRedirect() ?? 'pages/home';
 
             return $this->redirect($target);
         }
