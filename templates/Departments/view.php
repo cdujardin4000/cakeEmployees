@@ -42,33 +42,35 @@
             ) ?>
         </div>
     </aside>
-    <?php $picture = $department->dept_picture;
-    if ($picture == null) { ?>
-        <div class="card-upload">
-            <?php $this->Form->create($department, ['type' => 'file']) ?>
-            <fieldset>
-                <legend><?= __('Add the picture of the department') ?></legend>
-                <?php echo $this->Form->control('picture', ['type' => 'file']); ?>
-            </fieldset>
-            <?= $this->Form->button(__('Submit')) ?>
-            <?= $this->Form->end() ?>
-        </div>
-    <?php } else { ?>
-        <?php
-        //echo $picture;
-        echo $this->Html->image(
-            'department/' . $picture . '.jpg',
-            [
-                'alt' => h($department->dept_no),
-                'width' => 400,
-                'height' => 400,
-                'class' => 'card-show-department',
-            ]
-        );
-        }
-        ?>
     <div class="column-responsive column-center">
         <div class="departments view content">
+            <div class="show-dep">
+                <?php $picture = $department->dept_picture;
+                if ($picture == null) { ?>
+                    <div class="card-upload">
+                        <?php $this->Form->create($department, ['type' => 'file']) ?>
+                        <fieldset>
+                            <legend><?= __('Add the picture of the department') ?></legend>
+                            <?php echo $this->Form->control('picture', ['type' => 'file']); ?>
+                        </fieldset>
+                        <?= $this->Form->button(__('Submit')) ?>
+                        <?= $this->Form->end() ?>
+                    </div>
+                <?php } else { ?>
+                    <?php
+                    //echo $picture;
+                    echo $this->Html->image(
+                        'department/' . $picture . '.jpg',
+                        [
+                            'alt' => h($department->dept_no),
+                            'width' => 400,
+                            'height' => 400,
+                            'class' => 'card-show-department',
+                        ]
+                    );
+                }
+                ?>
+            </div>
             <h2 class="heading"><?= __('Department informations') ?></h2>
             <table>
                 <tr>

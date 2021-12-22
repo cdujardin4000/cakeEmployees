@@ -63,7 +63,7 @@ class DepartmentsTable extends Table
     {
         $query->contain('Employees', function ($q) {
             return $q->where(['DeptEmp.to_date' => '9999-01-01',])
-                ->order(['hire_date' => 'ASC',])
+                ->order(['hire_date' => 'DESC',])
                 ->limit(10);
         });
 

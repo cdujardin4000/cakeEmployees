@@ -186,9 +186,13 @@ footer p strong{
     display:flex;
     align-items:center;
 }
+.show-dep{
+    width: 100%;
+    text-align: center;
+}
 .card-show-department{
     width: 400px;
-    margin: 0 auto;
+
 }
 .card-show-pic{
     width: 200px;
