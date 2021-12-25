@@ -22,7 +22,7 @@
                 <tr>
                     <td><?= h($department->dept_no) ?></td>
                     <td><?= h($department->dept_name) ?></td>
-                    <td><?= h('nbEmployees') ?></td>
+                    <td><?= h($department->nbEmployees) ?></td>
                     <td class="actions">
                         <?=
                             $this->Html->link(

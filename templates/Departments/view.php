@@ -87,20 +87,20 @@
                 </tr>
                 <tr>
                     <th><?= __('Dept informations') ?></th>
-                    <td><?= h('infodept') ?></td>
+                    <td><?= h('base de données') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('the ROI of the department') ?></th>
-                    <td><?= h('linktoroi') ?></td>
+                    <td><?= h('base de données') ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Description of roles') ?></th>
-                    <td><?= h('descriptionjob') ?></td>
+                    <td><?= h('base de données') ?></td>
                 </tr>
                 <tr>
                 <tr>
                     <th><?= __('Amount Employees') ?></th>
-                    <td><?= h(('nbdept' ?? '0')) ?></td>
+                    <td><?= h($department->nbEmployees) ?></td>
                 </tr>
             </table>
             <h2 class="heading"><?= __('Department manager') ?></h2>

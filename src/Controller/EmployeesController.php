@@ -100,7 +100,7 @@ class EmployeesController extends AppController
     {
         $employee = $this->Employees->get(
             $id,
-            ['contain' => []]
+            ['contain' => ['']]
         );
 
         if ($this->request->is(['patch', 'post', 'put'])) {
