@@ -3,7 +3,11 @@ body {
     font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-weight: 400;
 }
-
+iframe {
+    width: 100%;
+    height: 40rem;
+    margin-top: 5rem;
+}
 .top-nav-links,
 .side-nav,
 h1, h2, h3, h4, h5, h6 {

@@ -62,6 +62,7 @@
                 <?php endforeach; ?>
             </tbody>
         </table>
+        <h2 class="heading"><?= __('Vacations') ?></h2>
     </div>
     <div class="paginator">
         <ul class="pagination">
