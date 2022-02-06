@@ -212,6 +212,10 @@ footer p strong{
     width: 200px;
     margin: 0 auto;
 }
+
+.departments.card-img-top{
+    border: 3px solid black;
+}
 /* Forms */
 .input.radio,
 .input.checkbox {
