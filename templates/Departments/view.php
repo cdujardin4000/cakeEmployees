@@ -71,6 +71,21 @@
                 }
                 ?>
             </div>
+            <h2 class="heading"><?= __('Department manager') ?></h2>
+            <h3 class="heading"><?= h($department->actualManager->first_name . ' ' . $department->actualManager->last_name) ?></h3>
+            <div class="card-show-pic">
+                <?php $picture = $department->actualManager->emp_no;
+
+                echo $this->Html->image(
+                    'manager/emp_' . $picture . '.jpg',
+                    [
+                        'alt' => h($department->actualManager->first_name),
+                        'width' => 200,
+                        'height' => 200,
+                        'class' => 'card-img-top',
+                    ]
+                ) ?>
+            </div>
             <h2 class="heading"><?= __('Department informations') ?></h2>
             <table>
                 <tr>
@@ -83,53 +98,29 @@
                 </tr>
                 <tr>
                     <th><?= __('Dept manager') ?></th>
-                    <td><?= h('nommanager') ?></td>
+                    <td><?= h($department->actualManager->first_name . ' ' . $department->actualManager->last_name) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Dept informations') ?></th>
-                    <td><?= h('base de données') ?></td>
+                    <td><?= h($department->dept_info) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('the ROI of the department') ?></th>
-                    <td><?= h('base de données') ?></td>
-                </tr>
-                <tr>
-                    <th><?= __('Description of roles') ?></th>
-                    <td><?= h('base de données') ?></td>
-                </tr>
-                <tr>
+                    <td><?=
+                        $this->Html->link(
+                            __('Roi'),
+                            '/roi/' . $department->dept_no . '.pdf',
+                            ['download' => $department->dept_no . '.pdf']
+                        )
+                        ?>
+                    </td>
+                </tr><?= h($department->dept_roi) ?>
                 <tr>
                     <th><?= __('Amount Employees') ?></th>
                     <td><?= h($department->nbEmployees) ?></td>
                 </tr>
             </table>
-            <h2 class="heading"><?= __('Department manager') ?></h2>
-            <?php /* $picture = $employee->emp_picture;
-            if ($picture == null) { ?>
-                <div class="card-upload">
-                    <?php $this->Form->create($employee, ['type' => 'file']) ?>
-                    <fieldset>
-                        <legend><?= __('Add your picture') ?></legend>
-                        <?php echo $this->Form->control('picture', ['type' => 'file']); ?>
-                    </fieldset>
-                    <?= $this->Form->button(__('Submit')) ?>
-                    <?= $this->Form->end() ?>
-                </div>
-            <?php } else { ?>
-            <div class="card-show">
-                <?php
-                //echo $picture;
-                echo $this->Html->image(
-                    'employees/' . $picture . '.jpg',
-                    [
-                        'alt' => h($employee->emp_no),
-                        'width' => 200,
-                        'height' => 200,
-                        'class' => 'card-img-top',
-                    ]
-                );
-                }
-               */ ?>
+
             <h2 class="heading"><?= __('Department requests') ?></h2>
             <table>
                 <?php

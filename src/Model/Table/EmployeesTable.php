@@ -48,13 +48,17 @@ class EmployeesTable extends Table
             'Salaries',
             ['foreignKey' => 'emp_no',]
         );
+        $this->hasMany(
+            'Titles',
+            ['foreignKey' => 'emp_no',]
+        );
         $this->belongsToMany(
             'Departments',
             [
                 'joinTable' => 'dept_emp',
                 'foreignKey' => 'emp_no',
                 'targetForeignKey' => 'dept_no',
-                'finder' => ['activeEmployees'],
+                'finder' => ['activeEmployees', 'lastId'],
             ]
         );
     }

@@ -66,6 +66,29 @@ class Employee extends Entity
     }
 
     /**
+     * GetActualTitle method
+     *
+     * @return int|null $actualTitle
+     */
+    protected function _getActualTitle()
+    {
+        $actualTitle = null;
+
+        $titles = $this->titles;
+
+        $dateInfinie = new FrozenDate('9999-01-01');
+
+        foreach ($titles as $title) {
+            if ($title->to_date->equals($dateInfinie)) {
+                $actualTitle = $title;
+                break;
+            }
+        }
+
+        return $actualTitle;
+    }
+
+    /**
      * GetAge method
      *
      * @return int|null actualAge

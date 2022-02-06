@@ -66,9 +66,11 @@ class DepartmentsController extends AppController
     public function view($id = null)
     {
         $query = $this->Departments->find(
-            'ActiveEmployees'
+            'ActiveEmployees',
+            ['contain' => ['Employees']]
         )->where(['dept_no' => $id]);
         $department = $query->first();
+        //$manager = $department->emp_no;
         $this->set(compact('department'));
     }
 

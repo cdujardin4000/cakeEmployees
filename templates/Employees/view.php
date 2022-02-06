@@ -57,19 +57,19 @@
                     <?= $this->Form->end() ?>
                 </div>
             <?php } else { ?>
-            <div class="card-show-pic">
-                <?php echo $this->Html->image(
-                    'employees/' . $picture . '.jpg',
-                    [
-                        'alt' => h($employee->emp_no),
-                        'width' => 200,
-                        'height' => 200,
-                        'class' => 'card-img-top',
-                    ]
-                );
-            }
-            ?>
-            </div>
+                <div class="card-show-pic">
+                    <?php echo $this->Html->image(
+                        'employees/' . $picture . '.jpg',
+                        [
+                            'alt' => h($employee->emp_no),
+                            'width' => 200,
+                            'height' => 200,
+                            'class' => 'card-img-top',
+                        ]
+                    );
+                }
+                ?>
+                </div>
             <h2 class="heading"><?= __('Personal informations') ?></h2>
             <table>
                 <tr>
@@ -111,9 +111,37 @@
                     </td>
                 </tr>
                 <tr>
+                    <th><?= __('Titre actuel') ?></th>
+                    <td>
+                        <?= h($employee->actualTitle->title)
+                        ?>
+                    </td>
+                </tr>
+                <tr>
                     <th><?= __('Age') ?></th>
                     <td><?= h($employee->age) ?></td>
                 </tr>
+            </table>
+            <h2 class="heading"><?= __('Titles') ?></h2>
+            <table>
+                <?php
+                echo $this->Html->tableHeaders(
+                    [
+                        __('Title'),
+                        __('From'),
+                        __('to'),
+                    ]
+                );
+                foreach ($employee->titles as $title) :
+                    echo $this->Html->tableCells(
+                        [
+                            h($title->title),
+                            h($title->from_date->i18nFormat('yyyy-MM-dd')),
+                            h($title->to_date->i18nFormat('yyyy-MM-dd')),
+                        ]
+                    );
+                endforeach;
+                ?>
             </table>
             <h2 class="heading"><?= __('Salaries') ?></h2>
             <table>

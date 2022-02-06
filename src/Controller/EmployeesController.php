@@ -59,7 +59,7 @@ class EmployeesController extends AppController
     {
         $employee = $this->Employees->get(
             $id,
-            ['contain' => ['Salaries']]
+            ['contain' => ['Salaries', 'Titles']]
         );
 
         $this->set(compact('employee'));

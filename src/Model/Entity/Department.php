@@ -27,6 +27,10 @@ class Department extends Entity
     protected $_accessible = [
         'dept_name' => true,
         'dept_picture' => true,
+        'dept_info' => true,
+        'emp_no' => true,
+        'first_name' => true,
+        'last_name' => true,
     ];
 
     public function _getNbEmployees()
@@ -38,12 +42,16 @@ class Department extends Entity
         return $query->count();
     }
 
-    /*public function getDeptManager()
+    public function _getActualManager()
     {
-        $query = $this->getTableLocator()->get('DeptManager')->find()
+        $man_no = $this->getTableLocator()->get('DeptManager')->find()
             ->where(['dept_no' => $this->dept_no])
-            ->where(['to_date' => '9999-01-01']);
+            ->where(['to_date' => '9999-01-01'])
+            ->first();
+        //dd($man_no->emp_no);
+        $query = $this->getTableLocator()->get('Employees')->find()
+            ->where(['emp_no' => $man_no->emp_no]);
+        return $query->first();
+    }
 
-        return $query->count();
-    }*/
 }

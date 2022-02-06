@@ -14,6 +14,7 @@
                     <th><?= $this->Paginator->sort('dept_no') ?></th>
                     <th><?= $this->Paginator->sort('dept_name') ?></th>
                     <th><?= $this->Paginator->sort('# employees') ?></th>
+                    <th><?= $this->Paginator->sort('manager') ?></th>
                     <th class="actions"><?= __('Actions') ?></th>
                 </tr>
             </thead>
@@ -23,6 +24,7 @@
                     <td><?= h($department->dept_no) ?></td>
                     <td><?= h($department->dept_name) ?></td>
                     <td><?= h($department->nbEmployees) ?></td>
+                    <td><?= h($department->actualManager->first_name . ' ' . $department->actualManager->last_name) ?></td>
                     <td class="actions">
                         <?=
                             $this->Html->link(

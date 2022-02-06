@@ -156,7 +156,17 @@ footer p strong{
 .related {
     margin-top: 2rem;
 }
+.fa-check-square{
+    color: #51d88a;
+    border: 1px solid #51d88a;
+    padding: 1px ;
+}
 
+.fa-times-circle{
+    color: #cc1f1a;
+    border: 1px solid #cc1f1a;
+    padding: 3px ;
+}
 /* Flash messages */
 .message {
     padding: 1rem;
