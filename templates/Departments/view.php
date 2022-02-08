@@ -119,6 +119,14 @@
                     <th><?= __('Amount Employees') ?></th>
                     <td><?= h($department->nbEmployees) ?></td>
                 </tr>
+                <tr>
+                    <th><?= __('New Employees in Dep') ?></th>
+                    <td>
+                        <?php foreach ($department->employees as $newEmployee) : ?>
+                        <p><?= h($newEmployee->first_name . ' ' . $newEmployee->last_name) ?></p>
+                        <?php endforeach; ?>
+                    </td>
+                </tr>
             </table>
 
             <h2 class="heading"><?= __('Department requests') ?></h2>

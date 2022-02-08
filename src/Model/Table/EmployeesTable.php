@@ -61,6 +61,10 @@ class EmployeesTable extends Table
                 'finder' => ['activeEmployees', 'lastId'],
             ]
         );
+        $this->hasMany(
+            'projects',
+            ['foreignKey' => 'id',]
+        );
     }
 
     /**
@@ -73,7 +77,7 @@ class EmployeesTable extends Table
      */
     public function beforeSave(Event $event, EntityInterface $entity, $options)
     {
-        $lastId = $this->find('lastId')->first()->lastId;
+        $lastId = $this->find('lastId')->first();
         $entity->emp_no = ++$lastId;
     }
 

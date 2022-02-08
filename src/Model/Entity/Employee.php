@@ -38,6 +38,7 @@ class Employee extends Entity
         'email' => true,
         'emp_picture' => true,
         'pic_dir' => true,
+        'projects' => true,
     ];
 
     //FONCTIONS REMONTEES DU CONTROLLER AFIN DE L'ALLEGER (heavy model/light controller)

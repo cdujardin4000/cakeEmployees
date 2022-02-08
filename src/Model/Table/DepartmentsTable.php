@@ -78,7 +78,6 @@ class DepartmentsTable extends Table
         return $query;
     }
 
-
     /**
      * Default validation rules.
      *

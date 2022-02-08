@@ -112,10 +112,7 @@
                 </tr>
                 <tr>
                     <th><?= __('Titre actuel') ?></th>
-                    <td>
-                        <?= h($employee->actualTitle->title)
-                        ?>
-                    </td>
+                    <td><?= h($employee->actualTitle->title) ?></td>
                 </tr>
                 <tr>
                     <th><?= __('Age') ?></th>
