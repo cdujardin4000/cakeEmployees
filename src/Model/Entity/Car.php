@@ -17,6 +17,7 @@ use Cake\ORM\Entity;
 class Car extends Entity
 {
     use \Cake\ORM\Locator\LocatorAwareTrait;
+
     /**
      * Fields that can be mass assigned using newEntity() or patchEntity().
      *

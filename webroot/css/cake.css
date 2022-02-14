@@ -238,6 +238,9 @@ footer p strong{
 .input.radio label:first-of-type {
     margin-bottom: 2.0rem;
 }
+.cars-btn {
+    margin: 0  0 0 1rem;
+}
 
 /* Paginator */
 .paginator {

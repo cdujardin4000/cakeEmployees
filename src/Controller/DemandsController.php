@@ -146,6 +146,7 @@ class DemandsController extends AppController
                         if ($salariesTable->save($newSalary)) {
                             $this->Flash->success(__('The new salary has been saved.'));
                             $demand->status = 'granted';
+                            $this->Demands->save($demand);
 
                             return $this->redirect(
                                 ['action' => 'index']
@@ -154,6 +155,7 @@ class DemandsController extends AppController
                         $this->Flash->error(__('The demand could not be saved. Please, try again.'));
                     }
                     $this->Flash->error(__('The demand could not be saved. Please, try again.'));
+
                 } elseif ($demand->type == 'reaffectation') {
                     //recuperer le dernier dept
                     $lastDept = array_pop($demand->dept_emp);
@@ -174,8 +176,11 @@ class DemandsController extends AppController
                         if ($deptEmpTable->save($newDept)) {
                             $this->Flash->success(__('The new dept has been saved.'));
                             $demand->status = 'granted';
+                            $this->Demands->save($demand);
 
-                            return $this->redirect(['action' => 'index']);
+                            return $this->redirect(
+                                ['action' => 'index']
+                            );
                         }
                         $this->Flash->error(__('The demand could not be saved. Please, try again.'));
                     }
@@ -183,7 +188,9 @@ class DemandsController extends AppController
             } else {
                 $demand->status = 'refused';
 
-                return $this->redirect(['action' => 'index']);
+                return $this->redirect(
+                    ['action' => 'index']
+                );
             }
 
         }

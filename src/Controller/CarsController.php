@@ -3,6 +3,10 @@ declare(strict_types=1);
 
 namespace App\Controller;
 
+use App\Model\Entity\CarEmp;
+use Cake\Datasource\Exception\RecordNotFoundException;
+use Cake\I18n\FrozenDate;
+
 /**
  * Cars Controller
  *
@@ -105,18 +109,73 @@ class CarsController extends AppController
         return $this->redirect(['action' => 'index']);
     }
 
+
     /**
-     * Edit method
+     * switchCars method : Echange de deux attributions de voitures
      *
-     * @param string|null $id Car id.
      * @return \Cake\Http\Response|null|void Redirects on successful edit, renders view otherwise.
      * @throws \Cake\Datasource\Exception\RecordNotFoundException When record not found.
      */
     public function switchCars()
     {
-        if ($this->request->is(['patch', 'post', 'put'])) {
-            $carIds = $this->request->getData();
-            dd($carIds);
+        //$this->Authorization->skipAuthorization();
+
+        $carEmpIds = $this->request->getData();
+
+        if (empty($carEmpIds)) {
+            return $this->redirect(['action' => 'index']);
         }
+
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            if (count($carEmpIds) != 2) {
+                $this->Flash->error(__('Vous devez choisir 2 attributions!'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+
+            $id1 = array_shift($carEmpIds);
+            $id2 = array_shift($carEmpIds);
+
+            try {
+                $carEmp1 = $this->Cars->CarEmp->get($id1);
+                $carEmp2 = $this->Cars->CarEmp->get($id2);
+
+                $car1 = new CarEmp([
+                    'emp_no' => $carEmp2->emp_no,
+                    'car_id' => $carEmp1->car_id,
+                    'receipt_date' => FrozenDate::now(), //On fixe à la date du jour
+                    //OU BIEN
+                    //'receipt_date' => $carEmp1->receipt_date    //On garde les anciennes dates
+                ]);
+
+                $car2 = new CarEmp([
+                    'emp_no' => $carEmp1->emp_no,
+                    'car_id' => $carEmp2->car_id,
+                    'receipt_date' => FrozenDate::now(),
+                ]);
+
+                if ($this->Cars->CarEmp->delete($carEmp1)) {
+                    if ($this->Cars->CarEmp->delete($carEmp2)) {
+                        if ($this->Cars->CarEmp->save($car1)) {
+                            if ($this->Cars->CarEmp->save($car2)) {
+                                $this->Flash->success(__('The car has been saved.'));
+
+                                return $this->redirect(['action' => 'index']);
+                            }
+                        }
+                    }
+                }
+
+                $this->Flash->error(__('The car could not be saved. Please, try again.'));
+
+                return $this->redirect(['action' => 'index']);
+            } catch (RecordNotFoundException $e) {
+                $this->Flash->error(__('Ces attributions semblent ne pas exister!'));
+
+                return $this->redirect(['action' => 'index']);
+            }
+        }
+
+        return $this->redirect(['action' => 'index']);
     }
 }

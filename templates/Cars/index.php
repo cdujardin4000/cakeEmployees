@@ -20,52 +20,50 @@
             </tr>
             </thead>
             <tbody>
-
-            <?php foreach ($cars as $car) : ?>
+            <?= $this->Form->create(null, [
+                'url' => [
+                    'controller' => 'Cars',
+                    'action' => 'switchCars',
+                ],
+            ]) ?>
+            <?php
+            $i = 0;
+            foreach ($cars as $car) : ?>
                 <tr>
                     <td><?= $this->Number->format($car->id) ?></td>
                     <td><?= h($car->registration_number) ?></td>
                     <td><?= h($car->model) ?></td>
                     <td><?= h($car->carUser->first_name . ' ' . $car->carUser->last_name) ?></td>
                     <td class="actions">
-                        <?php $this->Form->create(
-                            null,
+                        <?= $this->Form->checkbox(
+                            'carEmpId' . $i++,
                             [
-                                'type' => 'post',
-                                'url' => [
-                                    'controller' => 'Cars',
-                                    'action' => 'switchCars',
-                                ],
+                                'label' => false,
+                                'hiddenField' => false,
+                                'value' => $car->car_emp[0]->id,
                             ]
                         ) ?>
-                        <fieldset>
-                            <?= $this->Form->control(
-                                'Cars.id',
-                                [
-                                    'name' => 'idCar',
-                                    'type' => 'checkbox',
-                                    'multiple' => true,
-                                    'value' => $car->id,
-
-                                ]
-                            ); ?>
-                        </fieldset>
                     </td>
                 </tr>
             <?php endforeach; ?>
             </tbody>
-            <?= $this->Form->button(
-                'Switch Cars',
-                [
-                    'type' => 'submit',
-                    'class' => 'button float-right',
-                    'url' => [
-                        'controller' => 'Cars',
-                        'action' => 'switchCars',
-                    ],
-
-                ]
-            ); ?>
+            <div>
+                <?= $this->Form->button(
+                    'Réinitialiser le formulaire',
+                    [
+                        'type' => 'reset',
+                        'class' => 'button float-right cars-btn',
+                    ]
+                ); ?>
+            </div>
+            <div>
+                <?= $this->Form->submit(
+                    'Echanger',
+                    [
+                        'class' => 'button float-right cars-btn',
+                    ]
+                ) ?>
+            </div>
             <?= $this->Form->end(); ?>
         </table>
 
