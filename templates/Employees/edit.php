@@ -30,7 +30,13 @@
                     echo $this->Form->control('last_name');
                     echo $this->Form->control('gender');
                     echo $this->Form->control('hire_date');
-                    echo $this->Form->control('picture', ['type' => 'file']);
+                    echo $this->Form->control(
+                        'picture',
+                        [
+                            'type' => 'file',
+                            'label' => 'emp_picture',
+                        ]
+                    );
                 ?>
             </fieldset>
             <?= $this->Form->button(__('Submit')) ?>

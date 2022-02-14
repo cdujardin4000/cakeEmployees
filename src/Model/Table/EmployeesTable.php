@@ -62,8 +62,22 @@ class EmployeesTable extends Table
             ]
         );
         $this->hasMany(
-            'projects',
+            'Projects',
             ['foreignKey' => 'id',]
+        );
+
+        $this->hasMany(
+            'CarEmp',
+            ['foreignKey' => 'emp_no',]
+        );
+
+        $this->belongsToMany(
+            'Cars',
+            [
+                'joinTable' => 'car_emp',
+                'foreignKey' => 'emp_no',
+                'targetForeignKey' => 'car_id',
+            ]
         );
     }
 

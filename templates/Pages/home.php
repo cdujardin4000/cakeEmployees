@@ -96,6 +96,14 @@ $cakeDescription = 'CakePHP: the rapid development PHP framework';
                             <a class="nav-link" href="<?= $this->Url->build('/departments') ?>">Departments</a>
                         </li>
                         <li class="nav-item">
+                            <a class="nav-link" href="<?= $this->Url->build('/cars') ?>">Cars</a>
+                        </li>
+                        <?php if (true) { ?>
+                            <li class="nav-item">
+                                <a class="nav-link" href="<?= $this->Url->build('/projects') ?>">Projects</a>
+                            </li>
+                        <?php } ?>
+                        <li class="nav-item">
                             <a class="nav-link" href="<?= $this->Url->build('/demands') ?>">Demands</a>
                         </li>
                         <li class="nav-item dropdown">

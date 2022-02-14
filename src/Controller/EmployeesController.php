@@ -40,11 +40,10 @@ class EmployeesController extends AppController
     public function index()
     {
         $employees = $this->paginate($this->Employees);
-
         $total = $this->Employees->find()->count();
 
-        $genderCell = $this->cell('Gender');
 
+        $genderCell = $this->cell('Gender');
         $this->set(compact('employees', 'total', 'genderCell'));
     }
 
@@ -59,7 +58,7 @@ class EmployeesController extends AppController
     {
         $employee = $this->Employees->get(
             $id,
-            ['contain' => ['Salaries', 'Titles']]
+            ['contain' => ['Salaries', 'Titles', 'CarEmp', 'Cars']]
         );
 
         $this->set(compact('employee'));

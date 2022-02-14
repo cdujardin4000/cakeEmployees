@@ -9,7 +9,7 @@
     <aside class="column">
         <h2 class="heading"><?= __('Actions') ?></h2>
         <div class="side-nav">
-            <?= $this->Html->link(
+            <?= $this->Form->postlink(
                 __('Edit Employee'),
                 [
                     'action' => 'edit',
@@ -57,19 +57,20 @@
                     <?= $this->Form->end() ?>
                 </div>
             <?php } else { ?>
-                <div class="card-show-pic">
-                    <?php echo $this->Html->image(
-                        'employees/' . $picture . '.jpg',
-                        [
-                            'alt' => h($employee->emp_no),
-                            'width' => 200,
-                            'height' => 200,
-                            'class' => 'card-img-top',
-                        ]
-                    );
-                }
-                ?>
-                </div>
+            <div class="card-show-pic">
+                <?php echo $this->Html->image(
+                    'employees/' . $picture . '.jpg',
+                    [
+                        'alt' => h($employee->emp_no),
+                        'width' => 200,
+                        'height' => 200,
+                        'class' => 'card-img-top',
+                    ]
+                );
+            }
+            ?>
+            </div>
+
             <h2 class="heading"><?= __('Personal informations') ?></h2>
             <table>
                 <tr>
@@ -97,7 +98,7 @@
                     <td><?= h($employee->hire_date->i18nFormat('yyyy-MM-dd')) ?></td>
                 </tr>
                 <tr>
-                    <th><?= __('Salaire actuel') ?></th>
+                    <th><?= __('Actual Salary') ?></th>
                     <td>
                         <?= h($this->Number->currency(
                             $employee->actualSalary->salary,
@@ -111,8 +112,28 @@
                     </td>
                 </tr>
                 <tr>
-                    <th><?= __('Titre actuel') ?></th>
+                    <th><?= __('Actual title') ?></th>
                     <td><?= h($employee->actualTitle->title) ?></td>
+                </tr>
+                <?php if ($employee->cars[0]->model != null) { ?>
+                <tr>
+                    <th><?= __('Actual car') ?></th>
+                    <td>
+                        <?= h($employee->cars[0]->model) ?>
+                        <div class="card-show-car">
+                            <?php echo $this->Html->image(
+                                'cars/' . $employee->cars[0]->id . '.jpg',
+                                [
+                                    'alt' => h($employee->cars[0]->model),
+                                    'width' => 400,
+                                    'height' => 300,
+                                    'class' => 'card-img-top',
+                                ]
+                            );
+                            }
+                            ?>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <th><?= __('Age') ?></th>

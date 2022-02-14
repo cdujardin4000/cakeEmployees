@@ -39,6 +39,8 @@ class Employee extends Entity
         'emp_picture' => true,
         'pic_dir' => true,
         'projects' => true,
+        'car_emp' => true,
+        'carId' => true,
     ];
 
     //FONCTIONS REMONTEES DU CONTROLLER AFIN DE L'ALLEGER (heavy model/light controller)
@@ -65,6 +67,7 @@ class Employee extends Entity
 
         return $actualSalary;
     }
+
 
     /**
      * GetActualTitle method

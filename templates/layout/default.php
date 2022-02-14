@@ -88,6 +88,9 @@ $cakeDescription = 'CakePHP: the rapid development php framework';
                         <li class="nav-item">
                             <a class="nav-link" href="<?= $this->Url->build('/departments') ?>">Departments</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="<?= $this->Url->build('/cars') ?>">Cars</a>
+                        </li>
                         <?php if (true) { ?>
                             <li class="nav-item">
                             <a class="nav-link" href="<?= $this->Url->build('/projects') ?>">Projects</a>

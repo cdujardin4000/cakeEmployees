@@ -204,8 +204,8 @@ footer p strong{
     width: 100%;
     text-align: center;
 }
-.card-show-department{
-    width: 400px;
+.card-show-department .card-show-car{
+    width: 300px;
 
 }
 .card-show-pic{

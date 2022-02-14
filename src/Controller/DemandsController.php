@@ -5,6 +5,7 @@ namespace App\Controller;
 
 use Cake\I18n\FrozenDate;
 use App\Model\Entity\Salary;
+use App\Model\Entity\DeptEmp;
 /**
  * Demands Controller
  *
@@ -121,11 +122,8 @@ class DemandsController extends AppController
         $demand = $this->Demands->get($id, [
             'contain' => ['Employees', 'Salaries', 'DeptEmp'],
         ]);
-//dd($demand);
-        if ($this->request->is(['patch', 'post', 'put']))
-        {
-            if ($this->Demands->save($demand))
-            {
+        if ($this->request->is(['patch', 'post', 'put'])) {
+            if ($this->Demands->save($demand)) {
                 $this->Flash->success(__('The demand has been saved.'));
 
                 if ($demand->type == 'salary raise') {
@@ -156,9 +154,7 @@ class DemandsController extends AppController
                         $this->Flash->error(__('The demand could not be saved. Please, try again.'));
                     }
                     $this->Flash->error(__('The demand could not be saved. Please, try again.'));
-                }
-
-                else if ($demand->type == 'reaffectation') {
+                } elseif ($demand->type == 'reaffectation') {
                     //recuperer le dernier dept
                     $lastDept = array_pop($demand->dept_emp);
                     $lastDept->to_date = new FrozenDate();
@@ -166,28 +162,25 @@ class DemandsController extends AppController
                     //mettre à jour le nouveau salaire
                     $deptEmpTable = $this->getTableLocator()->get('DeptEmp');
 
-                    if ($deptEmpTable->save($lastDept)){
-
+                    if ($deptEmpTable->save($lastDept)) {
                         $this->Flash->success(__('The last dept has been updated.'));
 
                         $newDept = new DeptEmp();
-                        dd($newDept);
                         $newDept->emp_no = $demand->emp_no;
                         $newDept->dept_no = $demand->about;
-                        $newDept->from_date = new FrozenDate;
+                        $newDept->from_date = new FrozenDate();
                         $newDept->to_date = '9999-01-01';
 
                         if ($deptEmpTable->save($newDept)) {
-
                             $this->Flash->success(__('The new dept has been saved.'));
                             $demand->status = 'granted';
+
                             return $this->redirect(['action' => 'index']);
                         }
                         $this->Flash->error(__('The demand could not be saved. Please, try again.'));
                     }
                 }
-            }
-            else {
+            } else {
                 $demand->status = 'refused';
 
                 return $this->redirect(['action' => 'index']);
